@@ -14,7 +14,10 @@ async function run() {
 
     // This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.10.15' to 'v1.10.15'
     const tag = tagName.replace('refs/tags/', '');
-    const releaseName = core.getInput('release_name', { required: true }).replace('refs/tags/', '');
+    let releaseName = core.getInput('release_name', { required: false });
+    if (releaseName) {
+      releaseName = releaseName.replace('refs/tags/', '');
+    }
     const body = core.getInput('body', { required: false });
     const draft = core.getInput('draft', { required: false }) === 'true';
     const prerelease = core.getInput('prerelease', { required: false }) === 'true';
